@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+
+    <!-- Initialize DEMO database -->
+    <changeSet author="Leonid Albrecht" id="init:create_demo_db_tag">
+        <tagDatabase tag="create_demo_db"/>
+    </changeSet>
+    <include file="changelog/create_demo_db.sql"/>
+    <!-- ALTER TABLE public.v2storage ADD attributes  JSONB NOT NULL DEFAULT '{"fts": true, "encrypted": false}'; -->
+    <changeSet author="Leonid Albrecht" id="addColumn-example">
+        <validCheckSum>ANY</validCheckSum>
+        <addColumn schemaName= "public"
+                   tableName="t"
+                   nullable="false" >
+            <column name="attributes"
+                    type="JSONB"
+                    defaultValue='{"fts": ${enableSearchByCase}, "encrypted": ${isEncrypted} }' >
+            </column>
+        </addColumn>
+    </changeSet>
+
+
+</databaseChangeLog>

@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:13.5
+    environment:
+      POSTGRES_DB: "demo"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "gfhjkm"
+    ports:
+      - "5432:5432"
+    networks:
+      postgres-liquibase:
+
+  liquibase:
+    image: liquibase/liquibase:4.7
+    container_name: liquibase
+    command: --log-level=FINE --defaultsFile=/liquibase/changelog/liquibase.properties update -DftsValue
+    environment:
+      TABLE_NAME: "t"
+    volumes:
+      - /Users/lalbrecht/repos/personal/liquibase-psql/changelog:/liquibase/changelog/
+    depends_on:
+      - "postgres"
+    networks:
+      postgres-liquibase:
+
+networks:
+  postgres-liquibase:
+    
