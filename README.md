@@ -5,12 +5,8 @@ Liquibase PostgreSQL demo repo
 
 - Docker Desktop
 
-## Structure
-
-* 
-
 ## How to run stand
 
 ```
-docker-compose
+docker-compose up -d
 ```
